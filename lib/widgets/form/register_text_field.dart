@@ -56,7 +56,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             ),
             validator: (text) {
               if (text != null && text.isEmpty) {
-                return 'Compo obrigatório.';
+                return 'Campo obrigatório.';
               }
               return null;
             },

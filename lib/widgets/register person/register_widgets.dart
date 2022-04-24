@@ -33,7 +33,7 @@ class _RegisterWidgetsState extends State<RegisterWidgets> {
           nomeController: nomeController,
           periodoController: periodoController,
           isEdit: false,
-        )
+        ),
       ],
     );
   }
