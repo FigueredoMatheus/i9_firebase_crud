@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:i9_firebase_crud/widgets/view person/views_widget.dart';
 
 class ViewPersonPage extends StatelessWidget {
-  final Map<String, String> person;
+  final Map<String, dynamic> person;
 
   const ViewPersonPage({
     Key? key,

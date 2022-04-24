@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:i9_firebase_crud/widgets/edit%20person/edit_widgets.dart';
 
 class EditPersonPage extends StatelessWidget {
-  final Map<String, String> person;
+  final Map<String, dynamic> person;
   const EditPersonPage({
     Key? key,
     required this.person,

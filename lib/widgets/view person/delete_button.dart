@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:i9_firebase_crud/utils/dialogs.dart';
+import 'package:i9_firebase_crud/views/home_page.dart';
 
 class DeleteButton extends StatelessWidget {
   final String personId;
@@ -17,20 +19,33 @@ class DeleteButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           primary: const Color(0xFFFE5822),
         ),
-        onPressed: () {
+        onPressed: () async {
           dialogLoading(context, 'Excluindo');
 
-          Future.delayed(const Duration(seconds: 2), () {
-            Navigator.pop(context);
-            dialogSuccess(
-              context,
-              'Excluido com sucesso.',
-            ).then(
-              (value) {
-                Navigator.pop(context);
-              },
-            );
-          });
+          await FirebaseFirestore.instance
+              .collection('pessoas')
+              .doc(personId)
+              .delete();
+
+          Future.delayed(
+            const Duration(seconds: 2),
+            () {
+              Navigator.pop(context);
+              dialogSuccess(
+                context,
+                'Excluido com sucesso.',
+              ).then(
+                (value) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                      (route) => false);
+                },
+              );
+            },
+          );
         },
         child: const Text(
           'Excluir',

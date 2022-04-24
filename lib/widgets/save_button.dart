@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:i9_firebase_crud/utils/dialogs.dart';
+import 'package:i9_firebase_crud/views/home_page.dart';
 
 class SaveButton extends StatelessWidget {
   final TextEditingController nomeController;
@@ -7,6 +9,7 @@ class SaveButton extends StatelessWidget {
   final TextEditingController periodoController;
   final GlobalKey<FormState> formKey;
   final bool isEdit;
+  final String id;
 
   const SaveButton({
     Key? key,
@@ -15,24 +18,37 @@ class SaveButton extends StatelessWidget {
     required this.periodoController,
     required this.formKey,
     required this.isEdit,
+    required this.id,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    editPerson() {
+    editPerson() async {
       Map<String, String> person = {
         'nome': nomeController.text,
         'idade': idadeController.text,
         'periodo': periodoController.text,
       };
+
+      await FirebaseFirestore.instance
+          .collection('pessoas')
+          .doc(id)
+          .update(person);
     }
 
-    registerPerson() {
+    registerPerson() async {
       Map<String, String> person = {
         'nome': nomeController.text,
         'idade': idadeController.text,
         'periodo': periodoController.text,
       };
+
+      await FirebaseFirestore.instance
+          .collection('pessoas')
+          .add(person)
+          .then((doc) async {
+        await doc.update({'id': doc.id});
+      });
     }
 
     return SizedBox(
@@ -64,10 +80,12 @@ class SaveButton extends StatelessWidget {
                 isEdit ? 'Salvo com sucesso.' : 'Cadastrado com sucesso.',
               ).then(
                 (value) {
-                  Navigator.pop(context);
-                  if (isEdit) {
-                    Navigator.pop(context);
-                  }
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ),
+                      (route) => false);
                 },
               );
             },

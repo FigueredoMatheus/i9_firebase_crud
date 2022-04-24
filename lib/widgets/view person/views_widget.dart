@@ -4,7 +4,7 @@ import 'package:i9_firebase_crud/widgets/view person/delete_button.dart';
 import 'package:i9_firebase_crud/widgets/view person/edit_button.dart';
 
 class ViewsWidgets extends StatefulWidget {
-  final Map<String, String> person;
+  final Map<String, dynamic> person;
   const ViewsWidgets({
     Key? key,
     required this.person,

@@ -3,7 +3,7 @@ import 'package:i9_firebase_crud/widgets/form/forms.dart';
 import 'package:i9_firebase_crud/widgets/save_button.dart';
 
 class EditWidgets extends StatefulWidget {
-  final Map<String, String> person;
+  final Map<String, dynamic> person;
   const EditWidgets({
     Key? key,
     required this.person,
@@ -48,6 +48,7 @@ class _EditWidgetsState extends State<EditWidgets> {
           periodoController: periodoController,
           formKey: formKey,
           isEdit: true,
+          id: widget.person['id'],
         )
       ],
     );
